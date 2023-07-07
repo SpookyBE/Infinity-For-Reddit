@@ -30,7 +30,7 @@ public class APIUtils {
     public static final String CLIENT_SECRET_KEY = "client_secret";
     public static final String CLIENT_ID = "aT-YOidqJWDqpUMkoesgxA";
     // TODO add own imgur client ID
-    public static final String IMGUR_CLIENT_ID = "Client-ID cc671794e0ab397";
+    public static final String IMGUR_CLIENT_ID = "Client-ID 2aadff3453ec869";
     // TODO add own redgifs credentials
     public static final String REDGIFS_CLIENT_ID = "1828d0bcc93-15ac-bde6-0005-d2ecbe8daab3";
     public static final String REDGIFS_CLIENT_SECRET = "TJBlw7jRXW65NAGgFBtgZHu97WlzRXHYybK81sZ9dLM=";
