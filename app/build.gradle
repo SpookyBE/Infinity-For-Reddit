@@ -8,8 +8,8 @@ android {
         applicationId "com.spookybe.infinityforreddit"
         minSdk 21
         targetSdk 33
-        versionCode 121
-        versionName "6.0.2"
+        versionCode 122
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {

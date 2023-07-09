@@ -332,7 +332,7 @@ public class Post implements Parcelable {
     }
 
     public void setGfycatId(String gfycatId) {
-        this.gfycatId = gfycatId;
+        this.gfycatId = gfycatId.split("#")[0];
     }
 
     public String getStreamableShortCode() {
