@@ -54,29 +54,25 @@ public class RedgifsAccessTokenAuthenticator implements Interceptor {
 
     @NonNull
     @Override
+    // Todo change to authenticator
     public Response intercept(@NonNull Chain chain) throws IOException {
         Response response = chain.proceed(chain.request());
         if (response.code() == 401 || response.code() == 400) {
             String accessTokenHeader = response.request().header(APIUtils.AUTHORIZATION_KEY);
-            if (accessTokenHeader == null) {
-                return response;
-            }
-
             String accessToken = accessTokenHeader.substring(APIUtils.AUTHORIZATION_BASE.length() - 1).trim();
-            synchronized (this) {
-                String accessTokenFromSharedPreferences = mCurrentAccountSharedPreferences.getString(SharedPreferencesUtils.REDGIFS_ACCESS_TOKEN, "");
-                if (accessToken.equals(accessTokenFromSharedPreferences)) {
-                    String newAccessToken = refreshAccessToken();
-                    if (!newAccessToken.equals("")) {
-                        response.close();
-                        return chain.proceed(response.request().newBuilder().headers(Headers.of(APIUtils.getRedgifsOAuthHeader(newAccessToken))).build());
-                    } else {
-                        return response;
-                    }
-                } else {
+            String accessTokenFromSharedPreferences = mCurrentAccountSharedPreferences.getString(SharedPreferencesUtils.REDGIFS_ACCESS_TOKEN, "");
+
+            if (accessToken.equals(accessTokenFromSharedPreferences)) {
+                String newAccessToken = refreshAccessToken();
+                if (!newAccessToken.equals("")) {
                     response.close();
-                    return chain.proceed(response.request().newBuilder().headers(Headers.of(APIUtils.getRedgifsOAuthHeader(accessTokenFromSharedPreferences))).build());
+                    return chain.proceed(response.request().newBuilder().header("Authorization","bearer " + newAccessToken).build());
+                } else {
+                    return response;
                 }
+            } else { // This should never happen
+                response.close();
+                return chain.proceed(response.request().newBuilder().headers(Headers.of(APIUtils.getRedgifsOAuthHeader(accessTokenFromSharedPreferences))).build());
             }
         }
         return response;
